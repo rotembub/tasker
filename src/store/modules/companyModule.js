@@ -4,7 +4,6 @@ export const companyModule = {
     state() {
         return {
             companies: null,
-            // selectedCompanyId: null,
             selectedCompany: null,
             filterBy: {}
         }
@@ -27,11 +26,18 @@ export const companyModule = {
         setCompanies(state, { companies }) {
             state.companies = companies
         },
-        setSelectedCompany(state, { companyId }) {
-            // state.selectedCompanyId = companyId
-            console.log(state.companies, companyId)
-            state.selectedCompany = state.companies.find(company => company._id === companyId)
-            console.log(state.selectedCompany)
+        // setSelectedCompany(state, { companyId }) {
+        //     // state.selectedCompanyId = companyId
+        //     console.log(state.companies, companyId)
+        //     state.selectedCompany = state.companies.find(company => company._id === companyId)
+        //     console.log(state.selectedCompany)
+        // },
+        updateCompany(state, { updatedCompany }) {
+            const idx = state.companies.findIndex(company => company._id === updatedCompany._id)
+            state.companies.splice(idx, 1, updatedCompany)
+        },
+        setSelectedCompany(state, { company }) {
+            state.selectedCompany = company
         },
         removeCompany(state, { companyId }) {
             const idx = state.companies.findIndex((company) => company.id === companyId)
@@ -46,19 +52,32 @@ export const companyModule = {
         },
     },
     actions: {
-        async loadCompanies({ commit }) {
-            const companies = await companyService.query()
-            console.log(companies)
-            commit({ type: 'setCompanies', companies })
-            // for the first loading of the site
-            commit({ type: 'setSelectedCompany', companyId: companies[0]._id })
-        },
-        async removeCompany({ commit }, { companyId }) {
-            await companyService.removeCompany(companyId)
-            commit({ type: 'removeCompany', companyId })
+        async loadCompanies({ commit, dispatch }) {
+            try {
+                const companies = await companyService.query()
+                console.log(companies)
+                commit({ type: 'setCompanies', companies })
+                // for the first load:
+                dispatch({ type: 'selectCompanyById', companyId: companies[0]._id })
+
+            } catch (err) {
+                console.error('Failed to load companies', err)
+            }
         },
         async setFilter({ commit }, { filterBy }) {
             commit({ type: 'setFilter', filterBy })
         },
+        async selectCompanyById({ commit }, { companyId }) {
+            const company = await companyService.getById(companyId)
+            console.log(company, companyId)
+            commit({ type: 'setSelectedCompany', company })
+        },
+        async addDepartment({ commit, state }, { department }) {
+            const companyId = state.selectedCompany._id
+            const updatedCompany = await companyService.addDepartment(companyId, department)
+            console.log(updatedCompany);
+            commit({ type: 'updateCompany', updatedCompany })
+            commit({ type: 'setSelectedCompany', company: updatedCompany })
+        }
     },
 }

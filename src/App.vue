@@ -1,6 +1,6 @@
 <template>
   <section class="app-container main-layout">
-    <AppHeader />
+    <AppHeader @selectCompany="onSelectCompany" />
     <SideNav />
     <RouterView />
     <AppFooter />
@@ -22,6 +22,11 @@ export default {
   },
   created() {
     this.$store.dispatch({ type: 'loadCompanies' })
+  },
+  methods: {
+    onSelectCompany(companyId) {
+      this.$store.dispatch({ type: 'selectCompanyById', companyId })
+    }
   }
 }
 

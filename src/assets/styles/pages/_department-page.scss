@@ -1,6 +1,7 @@
-.department-page{
+.department-page {
     grid-area: main;
     background-color: burlywood;
     display: flex;
+    flex-direction: column;
     justify-content: center;
 }

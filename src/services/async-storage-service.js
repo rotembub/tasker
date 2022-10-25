@@ -18,7 +18,7 @@ function query(entityType) {
 //get an item by id
 function get(entityType, entityId) {
     return query(entityType)
-        .then(entities => entities.find(entity => entity.id === entityId))
+        .then(entities => entities.find(entity => entity._id === entityId))
 }
 
 //create new item

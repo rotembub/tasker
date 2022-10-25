@@ -6,10 +6,10 @@
             <TableHeader :viewMode="viewMode" />
             <tbody>
                 <template v-if="viewMode === 'departments'">
-                    <DepartmentPreview v-for="department in tableData" key="department.id" :department="department" />
+                    <DepartmentPreview v-for="department in tableData" :key="department.id" :department="department" />
                 </template>
 
-                <EmployeePreview v-else v-for="employee in tableData" key="employee.id" :employee="employee" />
+                <EmployeePreview v-else v-for="employee in tableData" :key="employee.id" :employee="employee" />
             </tbody>
 
 
