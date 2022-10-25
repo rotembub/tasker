@@ -34,8 +34,10 @@
     grid-template-areas:
         "header header header header"
         "sidenav main main main"
-        "sidenav main main main"
         "footer footer footer footer"
     ;
+    grid-template-rows: 5vh 1fr 5vh;
+    grid-template-columns: 20% 1fr;
+    height: 100vh;
 
 }
