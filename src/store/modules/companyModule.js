@@ -7,7 +7,6 @@ export const companyModule = {
             companies: null,
             selectedCompany: null,
             departmentToDelete: null,
-            filterBy: {}
         }
     },
     getters: {
@@ -35,10 +34,6 @@ export const companyModule = {
         updateCompany(state, { updatedCompany }) {
             const idx = state.companies.findIndex(company => company._id === updatedCompany._id)
             state.companies.splice(idx, 1, updatedCompany)
-            // const companies = [...state.companies]
-            // companies.splice(idx, 1, updatedCompany)
-            // state.companies = companies
-
         },
         setSelectedCompany(state, { company }) {
             state.selectedCompany = company
@@ -49,13 +44,6 @@ export const companyModule = {
         },
         setDepartmentToDelete(state, { department }) {
             state.departmentToDelete = department
-        },
-        setFilter(state, { filterBy }) {
-            if (!Object.values(filterBy).length) {
-                state.filterBy = {}
-                return
-            }
-            state.filterBy[filterBy.selectName] = filterBy.option
         },
     },
     actions: {
@@ -96,7 +84,6 @@ export const companyModule = {
         },
         async removeEmployee({ commit, state }, { employeeId, departmentId }) {
             const updatedCompany = await companyService.removeEmployee(state.selectedCompany._id, departmentId, employeeId)
-            console.log(updatedCompany)
             commit({ type: 'setSelectedCompany', company: updatedCompany })
             commit({ type: 'updateCompany', updatedCompany })
         }

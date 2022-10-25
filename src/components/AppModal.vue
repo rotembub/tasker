@@ -45,7 +45,6 @@ export default {
 
         },
         clearDepartmentToDelete() {
-            console.log('clicking screen')
             this.$store.commit({ type: 'setDepartmentToDelete', department: null })
         }
     },
