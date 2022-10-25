@@ -1,4 +1,8 @@
 .side-nav {
     grid-area: sidenav;
     background-color: coral;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

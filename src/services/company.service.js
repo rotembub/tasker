@@ -7,6 +7,51 @@ export const companyService = {
   removeCompany,
 }
 const COMPANY_KEY = 'companiesDB'
+// data structure:
+const demoData = [{
+  _id: 'c4223',
+  name: 'Intel',
+  departments: [
+    {
+      id: 'd531',
+      name: 'IT services',
+      employees: ['e123', 'e9272']
+    },
+    {
+      id: 'd723124',
+      name: 'Human resources',
+      employees: ['e732', 'e633']
+    }
+  ],
+  employees: [
+    {
+      id: 'e123',
+      name: 'John Harris',
+      title: 'Head of Security',
+      department: 'IT services'
+    },
+    {
+      id: 'e732',
+      name: 'Mica Hohenheim',
+      title: 'Interview instructor',
+      department: 'Human Resources'
+    },
+    {
+      id: 'e9272',
+      name: 'Jeb Morgenstein',
+      title: 'Software engineer',
+      department: 'IT services'
+    },
+    {
+      id: 'e633',
+      name: 'Hilary Johansen',
+      title: 'Regional manager',
+      department: 'Human Resources'
+    },
+  ]
+
+}]
+
 _createCompanies()
 
 async function query() {
@@ -25,27 +70,9 @@ async function removeCompany(companyId) {
 function _createCompanies() {
   let companies = loadFromStorage(COMPANY_KEY)
   if (!companies || !companies.length) {
-    companies = [
-      {
-        id: 'u123',
-        name: 'Rotem',
-        job: 'frontend',
-        score: 341
-      },
-      {
-        id: 'u368',
-        name: 'Amir',
-        job: 'troller',
-        score: 1231
-      },
-      {
-        id: 'u245',
-        name: 'Adam',
-        job: 'boss',
-        score: 5432
-      },
-    ]
+    companies = demoData
     saveToStorage(COMPANY_KEY, companies)
   }
   return companies
 }
+

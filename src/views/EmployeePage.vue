@@ -1,7 +1,6 @@
 <template>
-    <section class="employee-page">
-        <h1>employees page</h1>
-        <TableList @onDeleteUser="onDeleteUser" :tableData="companies" />
+    <section v-if="selectedCompany" class="employee-page">
+        <TableList @onDeleteUser="onDeleteUser" :tableData="employees" />
     </section>
 </template>
   
@@ -15,6 +14,7 @@ export default {
     },
     created() {
         // this.$store.dispatch({ type: 'loadCompanies' })
+        this.$store.commit({ type: 'setViewMode', viewMode: 'employees' })
     },
     methods: {
         onDeleteUser(userId) {
@@ -24,6 +24,12 @@ export default {
     computed: {
         companies() {
             return this.$store.getters.companies
+        },
+        selectedCompany() {
+            return this.$store.getters.selectedCompany
+        },
+        employees() {
+            return this.$store.getters.employees
         }
     }
 

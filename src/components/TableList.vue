@@ -3,7 +3,15 @@
 
         <table>
 
-            <EmployeePreview v-for="employee in tableData" key="employee.id" :employee="employee" />
+            <TableHeader :viewMode="viewMode" />
+            <tbody>
+                <template v-if="viewMode === 'departments'">
+                    <DepartmentPreview v-for="department in tableData" key="department.id" :department="department" />
+                </template>
+
+                <EmployeePreview v-else v-for="employee in tableData" key="employee.id" :employee="employee" />
+            </tbody>
+
 
 
         </table>
@@ -19,7 +27,9 @@
 </template>
   
 <script>
+import TableHeader from './TableHeader.vue';
 import EmployeePreview from './EmployeePreview.vue';
+import DepartmentPreview from './DepartmentPreview.vue';
 
 export default {
     props: {
@@ -27,12 +37,20 @@ export default {
     },
     emits: ['onDeleteUser'],
     name: 'table-list',
+    mounted() {
+        console.log(this.tableData)
+    },
     methods: {
         onDeleteUser(userId) {
             this.$emit('onDeleteUser', userId)
         }
     },
-    components: { EmployeePreview }
+    computed: {
+        viewMode() {
+            return this.$store.getters.viewMode
+        }
+    },
+    components: { EmployeePreview, DepartmentPreview, TableHeader }
 }
 </script>
   

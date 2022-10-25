@@ -2,4 +2,6 @@
 .app-header{
     grid-area: header;
     background-color: aquamarine;
+    display: flex;
+    justify-content: space-around;
 }
