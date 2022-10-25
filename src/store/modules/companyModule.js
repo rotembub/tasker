@@ -69,7 +69,7 @@ export const companyModule = {
             commit({ type: 'setFilter', filterBy })
         },
         async selectCompanyById({ commit }, { companyId }) {
-            const company = await companyService.getById(companyId)
+            const company = await companyService.getCompanyById(companyId)
             commit({ type: 'setSelectedCompany', company })
         },
         async addDepartment({ commit, state }, { department }) {
@@ -79,7 +79,7 @@ export const companyModule = {
             commit({ type: 'setSelectedCompany', company: updatedCompany })
         },
         async removeDepartment({ commit, state }, { department, reassignTo }) {
-            await companyService.removeDepartment(department.id, reassignTo)
+            await companyService.removeDepartment(state.selectedCompany.id, department.id, reassignTo)
         }
     },
 }
