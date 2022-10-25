@@ -1,13 +1,13 @@
 <template>
     <section class="department-page">
-        <AddDepartment @addDepartment="onAddDepartment" />
+        <AddCmp @addEntity="onAddDepartment" :entityType="'Department'" />
         <TableList :tableData="departments" @deleteDepartment="onDeleteDepartment" />
     </section>
 </template>
   
 <script>
 import TableList from '../components/TableList.vue';
-import AddDepartment from '../components/AddDepartment.vue';
+import AddCmp from '../components/AddCmp.vue';
 
 export default {
     name: 'department-page',
@@ -17,12 +17,11 @@ export default {
     },
     methods: {
         onAddDepartment(newDepartment) {
+            console.log(newDepartment);
             this.$store.dispatch({ type: 'addDepartment', department: newDepartment })
         },
         onDeleteDepartment(departId) {
             const department = this.departments.find(dep => dep.id === departId)
-            // const isEmpty = (!department.employees.length) ? true : false
-            // this.$emit('openModal', departId)
             this.$store.commit({ type: 'setDepartmentToDelete', department })
         }
     },
@@ -33,7 +32,7 @@ export default {
     },
     components: {
         TableList,
-        AddDepartment
+        AddCmp,
     },
 
 }

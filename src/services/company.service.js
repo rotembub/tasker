@@ -8,7 +8,8 @@ export const companyService = {
   getEmptyDepartment,
   addDepartment,
   updateCompany,
-  removeDepartment
+  removeDepartment,
+  getEmptyEmployee
 }
 const COMPANY_KEY = 'companiesDB'
 // data structure:
@@ -166,9 +167,17 @@ function _reassignEmployees(company, departmentId, employeesToReassign) {
     return emp
   })
   return companyToUpdate
-
 }
 
+function getEmptyEmployee() {
+  return {
+    id: makeId(),
+    name: '',
+    title: '',
+    department: '',
+    departmentId: ''
+  }
+}
 
 function getEmptyDepartment() {
   return {

@@ -1,25 +1,28 @@
 <template>
     <section v-if="selectedCompany" class="employee-page">
-        <TableList @onDeleteUser="onDeleteUser" :tableData="employees" />
+        <AddCmp @addEntity="onAddEmployee" :entityType="'Employee'" />
+        <TableList :tableData="employees" />
     </section>
 </template>
   
 <script>
 import TableList from '../components/TableList.vue';
-
+import AddCmp from '../components/AddCmp.vue';
 export default {
-    name: 'user-page',
+    name: 'employee-page',
     components: {
-        TableList
+        TableList,
+        AddCmp
     },
     created() {
         // this.$store.dispatch({ type: 'loadCompanies' })
         this.$store.commit({ type: 'setViewMode', viewMode: 'employees' })
     },
     methods: {
-        onDeleteUser(userId) {
-            this.$store.dispatch({ type: 'removeCompany', userId })
+        onAddEmployee(employee) {
+            console.log(employee)
         }
+
     },
     computed: {
         companies() {
