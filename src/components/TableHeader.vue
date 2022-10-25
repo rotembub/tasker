@@ -15,13 +15,6 @@
             </tr>
         </template>
 
-        <!-- {
-      id: 'e732',
-      name: 'Mica Hohenheim',
-      title: 'Interview instructor',
-      department: 'Human Resources'
-    }, -->
-
     </thead>
 </template>
   
@@ -36,9 +29,6 @@ export default {
     methods: {
     },
     computed: {
-        // viewMode() {
-        //     return this.$store.getters.viewMode
-        // }
     },
 }
 </script>

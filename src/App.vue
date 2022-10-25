@@ -1,6 +1,7 @@
 <template>
   <section class="app-container main-layout">
     <AppHeader @selectCompany="onSelectCompany" />
+    <AppModal v-if="departmentToDelete" />
     <SideNav />
     <RouterView />
     <AppFooter />
@@ -12,6 +13,7 @@
 import AppHeader from './components/AppHeader.vue';
 import AppFooter from './components/AppFooter.vue';
 import SideNav from './components/SideNav.vue';
+import AppModal from './components/AppModal.vue';
 
 export default {
   name: 'App',
@@ -19,6 +21,13 @@ export default {
     AppHeader,
     SideNav,
     AppFooter,
+    AppModal
+  },
+  data() {
+    return {
+      // isModalOpen: false,
+      action: null,
+    }
   },
   created() {
     this.$store.dispatch({ type: 'loadCompanies' })
@@ -26,6 +35,17 @@ export default {
   methods: {
     onSelectCompany(companyId) {
       this.$store.dispatch({ type: 'selectCompanyById', companyId })
+    },
+    // openModal() {
+    //   this.toggleModal()
+    // },
+    // toggleModal() {
+    //   this.isModalOpen = !this.isModalOpen
+    // }
+  },
+  computed: {
+    departmentToDelete() {
+      return this.$store.getters.departmentToDelete
     }
   }
 }

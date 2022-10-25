@@ -25,7 +25,6 @@ export default {
 
     methods: {
         onAddDepartment() {
-            console.log('trying to add ', this.department)
             this.$emit('addDepartment', this.department)
         }
     }

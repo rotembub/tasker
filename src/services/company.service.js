@@ -3,11 +3,12 @@ import { loadFromStorage, saveToStorage, makeId } from './util.service'
 
 export const companyService = {
   query,
-  getById,
+  getCompanyById,
   removeCompany,
   getEmptyDepartment,
   addDepartment,
-  updateCompany
+  updateCompany,
+  removeDepartment
 }
 const COMPANY_KEY = 'companiesDB'
 // data structure:
@@ -31,25 +32,30 @@ const demoData = [{
       id: 'e123',
       name: 'John Harris',
       title: 'Head of Security',
-      department: 'IT services'
+      department: 'IT services',
+      departmentId: 'd531'
     },
     {
       id: 'e732',
       name: 'Mica Hohenheim',
       title: 'Interview instructor',
-      department: 'Human Resources'
+      department: 'Human Resources',
+      departmentId: 'd723124',
+
     },
     {
       id: 'e9272',
       name: 'Jeb Morgenstein',
       title: 'Software engineer',
-      department: 'IT services'
+      department: 'IT services',
+      departmentId: 'd531'
     },
     {
       id: 'e633',
       name: 'Hilary Johansen',
       title: 'Regional manager',
-      department: 'Human Resources'
+      department: 'Human Resources',
+      departmentId: 'd723124',
     },
   ]
 
@@ -73,25 +79,29 @@ const demoData = [{
       id: 'e9993',
       name: 'Jenny Horbach',
       title: 'Junior Engineer',
-      department: 'Engineering'
+      department: 'Engineering',
+      departmentId: 'd766734'
     },
     {
       id: 'e38266',
       name: 'Boris Tokavish',
       title: 'Tech Lead',
-      department: 'Automation R&D'
+      department: 'Automation R&D',
+      departmentId: 'd723124'
     },
     {
       id: 'e56772',
       name: 'Johnny Williamson',
       title: 'Senior Engineer',
-      department: 'Engineering'
+      department: 'Engineering',
+      departmentId: 'd766734'
     },
     {
       id: 'e59472',
       name: 'Hirohito Toraku',
       title: 'Sales manager',
-      department: 'Automation R&D'
+      department: 'Automation R&D',
+      departmentId: 'd723124'
     },
   ]
 
@@ -104,7 +114,7 @@ async function query() {
   return storageService.query(COMPANY_KEY)
 }
 
-async function getById(companyId) {
+async function getCompanyById(companyId) {
   return storageService.get(COMPANY_KEY, companyId)
 }
 
@@ -117,9 +127,39 @@ async function updateCompany(company) {
 }
 
 async function addDepartment(companyId, department) {
-  const company = await getById(companyId)
+  const company = await getCompanyById(companyId)
   company.departments.push(department)
   return updateCompany(company)
+}
+
+async function removeDepartment(companyId, departmentId, reassignTo) {
+  let companyToUpdate = getCompanyById(companyId)
+  const departmentToRemove = companyToUpdate.departments.find(dep => dep.id === departmentId)
+  const depIdx = companyToUpdate.departments.findIndex(dep => dep.id === departmentId)
+  if (reassignTo) {
+    var employeesToReassign = companyToUpdate.employees
+    const companyToUpdate = _reassignEmployees(companyToUpdate, reassignTo, employeesToReassign)
+  } else {
+    companyToUpdate.employees = companyToUpdate.employees.filter(emp => !departmentToRemove.employees.includes(emp.id))
+  }
+  companyToUpdate.departments.splice(depIdx, 1)
+  return updateCompany(companyToUpdate)
+}
+
+function _reassignEmployees(company, departmentId, employeesToReassign) {
+  const companyToUpdate = JSON.parse(JSON.stringify(company))
+  const depIdx = companyToUpdate.departments.findIdx(dep => dep.id === departmentId)
+  companyToUpdate.departments[depIdx].employees.push(...employeesToReassign)
+  companyToUpdate.employees = companyToUpdate.employees.map(emp => {
+    if (employeesToReassign.includes(emp.id)) {
+      // if you find an employee who is in the reassigned array
+      // then update his dep ID and dep Name
+      emp.departmentId = departmentId
+      emp.department = companyToUpdate.departments[depIdx].name
+    }
+  })
+  return companyToUpdate
+
 }
 
 

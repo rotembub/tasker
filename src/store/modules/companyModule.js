@@ -5,6 +5,7 @@ export const companyModule = {
         return {
             companies: null,
             selectedCompany: null,
+            departmentToDelete: null,
             filterBy: {}
         }
     },
@@ -20,18 +21,16 @@ export const companyModule = {
         },
         employees(state) {
             return state.selectedCompany.employees
+        },
+        departmentToDelete(state) {
+            return state.departmentToDelete
         }
+
     },
     mutations: {
         setCompanies(state, { companies }) {
             state.companies = companies
         },
-        // setSelectedCompany(state, { companyId }) {
-        //     // state.selectedCompanyId = companyId
-        //     console.log(state.companies, companyId)
-        //     state.selectedCompany = state.companies.find(company => company._id === companyId)
-        //     console.log(state.selectedCompany)
-        // },
         updateCompany(state, { updatedCompany }) {
             const idx = state.companies.findIndex(company => company._id === updatedCompany._id)
             state.companies.splice(idx, 1, updatedCompany)
@@ -42,6 +41,9 @@ export const companyModule = {
         removeCompany(state, { companyId }) {
             const idx = state.companies.findIndex((company) => company.id === companyId)
             state.companies.splice(idx, 1)
+        },
+        setDepartmentToDelete(state, { department }) {
+            state.departmentToDelete = department
         },
         setFilter(state, { filterBy }) {
             if (!Object.values(filterBy).length) {
@@ -55,7 +57,6 @@ export const companyModule = {
         async loadCompanies({ commit, dispatch }) {
             try {
                 const companies = await companyService.query()
-                console.log(companies)
                 commit({ type: 'setCompanies', companies })
                 // for the first load:
                 dispatch({ type: 'selectCompanyById', companyId: companies[0]._id })
@@ -69,15 +70,16 @@ export const companyModule = {
         },
         async selectCompanyById({ commit }, { companyId }) {
             const company = await companyService.getById(companyId)
-            console.log(company, companyId)
             commit({ type: 'setSelectedCompany', company })
         },
         async addDepartment({ commit, state }, { department }) {
             const companyId = state.selectedCompany._id
             const updatedCompany = await companyService.addDepartment(companyId, department)
-            console.log(updatedCompany);
             commit({ type: 'updateCompany', updatedCompany })
             commit({ type: 'setSelectedCompany', company: updatedCompany })
+        },
+        async removeDepartment({ commit, state }, { department, reassignTo }) {
+            await companyService.removeDepartment(department.id, reassignTo)
         }
     },
 }

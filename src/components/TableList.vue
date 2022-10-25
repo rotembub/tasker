@@ -1,28 +1,15 @@
 <template>
     <section class="table-list">
-
         <table>
-
             <TableHeader :viewMode="viewMode" />
             <tbody>
                 <template v-if="viewMode === 'departments'">
-                    <DepartmentPreview v-for="department in tableData" :key="department.id" :department="department" />
+                    <DepartmentPreview v-for="department in tableData" :key="department.id" :department="department"
+                        @deleteDepartment="onDeleteDepartment" />
                 </template>
-
                 <EmployeePreview v-else v-for="employee in tableData" :key="employee.id" :employee="employee" />
             </tbody>
-
-
-
         </table>
-
-
-        <!-- <div v-for="user in tableData" key="user.id">
-            <UserPreview :user="user" />
-            <div class="control-box">
-                <button @click="onDeleteUser(user.id)">X</button>
-            </div>
-        </div> -->
     </section>
 </template>
   
@@ -35,14 +22,11 @@ export default {
     props: {
         tableData: Array
     },
-    emits: ['onDeleteUser'],
+    emits: ['deleteDepartment'],
     name: 'table-list',
-    mounted() {
-        console.log(this.tableData)
-    },
     methods: {
-        onDeleteUser(userId) {
-            this.$emit('onDeleteUser', userId)
+        onDeleteDepartment(departId) {
+            this.$emit('deleteDepartment', departId)
         }
     },
     computed: {
