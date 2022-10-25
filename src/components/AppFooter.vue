@@ -1,6 +1,6 @@
 <template>
   <footer class="app-footer">
-    footer
+    Tasker by RB ©
   </footer>
 </template>
 

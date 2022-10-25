@@ -2,7 +2,7 @@
     <tr class="department-preview">
         <td>{{ department.name }}</td>
         <td>{{ department.employees.length }}</td>
-        <td> <button @click="onDelete">X</button></td>
+        <td> <button class="btn-danger" @click="onDelete">✖</button></td>
     </tr>
 </template>
   

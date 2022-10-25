@@ -1,18 +1,21 @@
 <template>
-    <section class="app-modal">
-        <h1>{{ getDialogText }}</h1>
+    <section class="cover-screen" @click="clearDepartmentToDelete()">
+        <section class="app-modal" @click.stop>
+            <h1>{{ getDialogText }}</h1>
 
-        <template v-if="currStage === 0">
-            <h2>Reassign to:</h2>
-            <select name="departments" v-model="reassignTo">
-                <option value="null">Do not Reassign</option>
-                <option v-for="dep in companyDepartments" :key="dep.id" :value="dep.id">{{ dep.name }}
-                </option>
-            </select>
-        </template>
+            <div class="actions-container" @click.stop>
+                <template v-if="currStage === 0">
+                    <select name="departments" v-model="reassignTo">
+                        <option value="null">Do not Reassign</option>
+                        <option v-for="dep in companyDepartments" :key="dep.id" :value="dep.id">{{ dep.name }}
+                        </option>
+                    </select>
+                </template>
 
-        <button @click="handleAnswer(true)">{{ getBtnTxt }}</button>
-        <button v-if="currStage === 1" @click="handleAnswer(false)">No</button>
+                <button @click.stop="handleAnswer(true)" class="btn-confirm">{{ getBtnTxt }}</button>
+                <button class="btn-confirm" v-if="currStage === 1" @click.stop="handleAnswer(false)">No</button>
+            </div>
+        </section>
     </section>
 </template>
   
@@ -42,6 +45,7 @@ export default {
 
         },
         clearDepartmentToDelete() {
+            console.log('clicking screen')
             this.$store.commit({ type: 'setDepartmentToDelete', department: null })
         }
     },
@@ -49,12 +53,11 @@ export default {
     computed: {
         getDialogText() {
             const stage = this.stages[this.currStage]
-            console.log(stage)
             switch (stage) {
                 case 'delete':
                     return 'Are you sure you wish you delete this department?'
                 case 'reassign':
-                    return 'Do you wish to reassign the department\'s employees to another department?'
+                    return 'Reassign existing employees to another department?'
             }
         },
         getBtnTxt() {

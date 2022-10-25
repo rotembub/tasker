@@ -1,4 +1,7 @@
 .app-footer {
     grid-area: footer;
-    background-color: lightcoral;;
+    background-color: lightcoral;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

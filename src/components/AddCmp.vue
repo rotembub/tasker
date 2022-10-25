@@ -11,7 +11,7 @@
                 </option>
             </select>
         </template>
-        <button @click="onAddEntity">Add</button>
+        <button class="btn-confirm" @click="onAddEntity">Add</button>
     </section>
 </template>
   

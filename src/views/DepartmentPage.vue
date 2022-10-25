@@ -17,7 +17,6 @@ export default {
     },
     methods: {
         onAddDepartment(newDepartment) {
-            console.log(newDepartment);
             this.$store.dispatch({ type: 'addDepartment', department: newDepartment })
         },
         onDeleteDepartment(departId) {

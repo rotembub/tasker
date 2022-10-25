@@ -187,7 +187,7 @@ async function removeEmployee(companyId, departmentId, employeeId) {
     const idx = company.employees.findIndex(emp => emp.id === employeeId)
     const depIdx = company.departments.findIndex(dep => dep.id === departmentId)
     company.employees.splice(idx, 1)
-    company.departments[depIdx] = company.departments[depIdx].employees.filter(empId => empId !== employeeId)
+    company.departments[depIdx].employees = company.departments[depIdx].employees.filter(empId => empId !== employeeId)
     return updateCompany(company)
   } catch (err) {
     console.error('Could not delete employee:', err)

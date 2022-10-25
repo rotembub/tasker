@@ -1,12 +1,18 @@
 .table-list {
-    td {
-        padding: 0.5em 2em;
+
+    table {
+        border: 1px rgb(189, 185, 185) solid;
+        border-collapse: collapse;
+
+        td {
+            padding: 0.5em 2em;
+
+            border: 1px rgb(189, 185, 185) solid;
+        }
+
+        tr {
+            border: 1px rgb(189, 185, 185) solid;
+        }
     }
 
-    // text-align: center;
-    // tbody {
-    //     tr:nth-child(2) {
-    //         text-align: center;
-    //     }
-    // }
 }

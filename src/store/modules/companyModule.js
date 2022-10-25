@@ -84,9 +84,7 @@ export const companyModule = {
             commit({ type: 'setSelectedCompany', company: updatedCompany })
         },
         async removeDepartment({ commit, state }, { department, reassignTo }) {
-            console.log('asking to remove', department, 'and to reassign to', reassignTo)
             const updatedCompany = await companyService.removeDepartment(state.selectedCompany._id, department, reassignTo)
-            console.log('in the store after update:', updatedCompany)
             commit({ type: 'setSelectedCompany', company: updatedCompany })
             commit({ type: 'updateCompany', updatedCompany })
             commit({ type: 'setDepartmentToDelete', department: null })
@@ -98,6 +96,7 @@ export const companyModule = {
         },
         async removeEmployee({ commit, state }, { employeeId, departmentId }) {
             const updatedCompany = await companyService.removeEmployee(state.selectedCompany._id, departmentId, employeeId)
+            console.log(updatedCompany)
             commit({ type: 'setSelectedCompany', company: updatedCompany })
             commit({ type: 'updateCompany', updatedCompany })
         }

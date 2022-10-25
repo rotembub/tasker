@@ -1,7 +1,13 @@
-
-.app-header{
+.app-header {
     grid-area: header;
     background-color: lightcoral;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+
+    padding: 0 20px;
+
+    select {
+        height: 75%;
+        align-self: center;
+    }
 }

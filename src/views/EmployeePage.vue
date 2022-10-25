@@ -15,12 +15,10 @@ export default {
         AddCmp
     },
     created() {
-        // this.$store.dispatch({ type: 'loadCompanies' })
         this.$store.commit({ type: 'setViewMode', viewMode: 'employees' })
     },
     methods: {
         onAddEmployee(employee) {
-            console.log(employee)
             this.$store.dispatch({ type: 'addEmployee', employee })
         },
         onDeleteEmployee({ employeeId, departmentId }) {

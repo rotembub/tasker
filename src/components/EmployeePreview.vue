@@ -3,7 +3,7 @@
         <td> {{ employee.name }}</td>
         <td> {{ employee.title }}</td>
         <td>{{ employee.department }}</td>
-        <td> <button @click="onDelete">X</button></td>
+        <td> <button class="btn-danger" @click="onDelete">✖</button></td>
     </tr>
 </template>
   
