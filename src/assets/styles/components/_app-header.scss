@@ -6,8 +6,19 @@
 
     padding: 0 20px;
 
-    select {
-        height: 75%;
-        align-self: center;
+    .company-picker {
+        display: flex;
+        align-items: center;
+
+        &>* {
+            margin-inline-end: 10px;
+        }
+
+        select {
+            border-radius: 3em;
+            text-align: center;
+            height: 75%;
+            align-self: center;
+        }
     }
 }

@@ -9,7 +9,6 @@
 </template>
 
 <script>
-// import { RouterLink, RouterView } from 'vue-router'
 import AppHeader from './components/AppHeader.vue';
 import AppFooter from './components/AppFooter.vue';
 import SideNav from './components/SideNav.vue';
@@ -25,7 +24,6 @@ export default {
   },
   data() {
     return {
-      // isModalOpen: false,
       action: null,
     }
   },
@@ -36,12 +34,6 @@ export default {
     onSelectCompany(companyId) {
       this.$store.dispatch({ type: 'selectCompanyById', companyId })
     },
-    // openModal() {
-    //   this.toggleModal()
-    // },
-    // toggleModal() {
-    //   this.isModalOpen = !this.isModalOpen
-    // }
   },
   computed: {
     departmentToDelete() {

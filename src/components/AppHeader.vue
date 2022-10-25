@@ -1,9 +1,12 @@
 <template>
   <header class="app-header">
     <h1>Manager</h1>
-    <select @input="onSelectCompany" name="companies" placeholder="Companies">
-      <option v-for="company in companies" :key="company._id" :value="company._id">{{ company.name }}</option>
-    </select>
+    <div class="company-picker">
+      <label for="companies">Company </label>
+      <select @input="onSelectCompany" name="companies" placeholder="Companies">
+        <option v-for="company in companies" :key="company._id" :value="company._id">{{ company.name }}</option>
+      </select>
+    </div>
   </header>
 </template>
 
