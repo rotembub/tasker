@@ -7,6 +7,7 @@ export const companyModule = {
             companies: null,
             selectedCompany: null,
             departmentToDelete: null,
+            filterBydDep: '',
         }
     },
     getters: {
@@ -20,11 +21,12 @@ export const companyModule = {
             return state.selectedCompany.departments
         },
         employees(state) {
-            return state.selectedCompany.employees
+            const regex = RegExp(state.filterBydDep, 'i')
+            return state.selectedCompany.employees.filter(emp => regex.test(emp.departmentId))
         },
         departmentToDelete(state) {
             return state.departmentToDelete
-        }
+        },
 
     },
     mutations: {
@@ -45,6 +47,10 @@ export const companyModule = {
         setDepartmentToDelete(state, { department }) {
             state.departmentToDelete = department
         },
+        setFilterBy(state, { department }) {
+            state.filterBydDep = department
+            console.log(state.filterBydDep)
+        }
     },
     actions: {
         async loadCompanies({ commit, dispatch }) {

@@ -35,6 +35,11 @@ export default {
 
     methods: {
         onAddEntity() {
+            if (this.entityType === 'Employee') {
+                if (!this.entity.name || !this.entity.title || !this.entity.department) return
+            } else {
+                if (!this.entity.name) return
+            }
             this.$emit('addEntity', this.entity)
             this.getEmptyEntity()
         },

@@ -1,5 +1,6 @@
 <template>
     <section v-if="selectedCompany" class="employee-page">
+        <FilterCmp @setFilterBy="setFilterBy" />
         <AddCmp @addEntity="onAddEmployee" :entityType="'Employee'" />
         <TableList :tableData="employees" @deleteEmployee="onDeleteEmployee" />
     </section>
@@ -8,11 +9,14 @@
 <script>
 import TableList from '../components/TableList.vue';
 import AddCmp from '../components/AddCmp.vue';
+import FilterCmp from '../components/FilterCmp.vue';
+
 export default {
     name: 'employee-page',
     components: {
         TableList,
-        AddCmp
+        AddCmp,
+        FilterCmp
     },
     created() {
         this.$store.commit({ type: 'setViewMode', viewMode: 'employees' })
@@ -23,6 +27,10 @@ export default {
         },
         onDeleteEmployee({ employeeId, departmentId }) {
             this.$store.dispatch({ type: 'removeEmployee', employeeId, departmentId })
+        },
+        setFilterBy(depId) {
+            console.log('here');
+            this.$store.commit({ type: 'setFilterBy', department: depId })
         }
 
     },
