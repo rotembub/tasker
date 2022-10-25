@@ -133,12 +133,14 @@ async function addDepartment(companyId, department) {
 }
 
 async function removeDepartment(companyId, departmentId, reassignTo) {
-  let companyToUpdate = getCompanyById(companyId)
+  console.log(companyId, departmentId, reassignTo)
+  let companyToUpdate = await getCompanyById(companyId)
+  console.log(companyToUpdate)
   const departmentToRemove = companyToUpdate.departments.find(dep => dep.id === departmentId)
   const depIdx = companyToUpdate.departments.findIndex(dep => dep.id === departmentId)
   if (reassignTo) {
-    var employeesToReassign = companyToUpdate.employees
-    const companyToUpdate = _reassignEmployees(companyToUpdate, reassignTo, employeesToReassign)
+    var employeesToReassign = companyToUpdate.departments[depIdx].employees
+    companyToUpdate = _reassignEmployees(companyToUpdate, reassignTo, employeesToReassign)
   } else {
     companyToUpdate.employees = companyToUpdate.employees.filter(emp => !departmentToRemove.employees.includes(emp.id))
   }
@@ -148,15 +150,20 @@ async function removeDepartment(companyId, departmentId, reassignTo) {
 
 function _reassignEmployees(company, departmentId, employeesToReassign) {
   const companyToUpdate = JSON.parse(JSON.stringify(company))
-  const depIdx = companyToUpdate.departments.findIdx(dep => dep.id === departmentId)
+  console.log(company, companyToUpdate, employeesToReassign)
+  const depIdx = companyToUpdate.departments.findIndex(dep => dep.id === departmentId)
   companyToUpdate.departments[depIdx].employees.push(...employeesToReassign)
   companyToUpdate.employees = companyToUpdate.employees.map(emp => {
+    console.log(emp)
+    console.log(employeesToReassign)
     if (employeesToReassign.includes(emp.id)) {
+      console.log('includes!');
       // if you find an employee who is in the reassigned array
       // then update his dep ID and dep Name
       emp.departmentId = departmentId
       emp.department = companyToUpdate.departments[depIdx].name
     }
+    return emp
   })
   return companyToUpdate
 

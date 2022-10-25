@@ -34,6 +34,10 @@ export const companyModule = {
         updateCompany(state, { updatedCompany }) {
             const idx = state.companies.findIndex(company => company._id === updatedCompany._id)
             state.companies.splice(idx, 1, updatedCompany)
+            // const companies = [...state.companies]
+            // companies.splice(idx, 1, updatedCompany)
+            // state.companies = companies
+
         },
         setSelectedCompany(state, { company }) {
             state.selectedCompany = company
@@ -79,7 +83,12 @@ export const companyModule = {
             commit({ type: 'setSelectedCompany', company: updatedCompany })
         },
         async removeDepartment({ commit, state }, { department, reassignTo }) {
-            await companyService.removeDepartment(state.selectedCompany.id, department.id, reassignTo)
+            console.log('asking to remove', department, 'and to reassign to', reassignTo)
+            const updatedCompany = await companyService.removeDepartment(state.selectedCompany._id, department, reassignTo)
+            console.log('in the store after update:', updatedCompany)
+            commit({ type: 'setSelectedCompany', company: updatedCompany })
+            commit({ type: 'updateCompany', updatedCompany })
+            commit({ type: 'setDepartmentToDelete', department: null })
         }
     },
 }
