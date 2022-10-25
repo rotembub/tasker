@@ -1,5 +1,6 @@
 .cover-screen {
-    background-color: #a7a4a487;;
+    background-color: #a7a4a487;
+    ;
     z-index: 50;
     width: 100vw;
     height: 100vh;
@@ -11,10 +12,11 @@
         top: 35%;
         left: 50%;
         transform: translate(-50%, -50%);
-        border: 2px solid black;
+        border: 2px solid rgb(189, 185, 185);
         border-radius: 12px;
         padding: 20px;
-        background-color: antiquewhite;
+        background-color: white;
+        color: lightcoral;
 
         .actions-container {
             margin: 10px;
