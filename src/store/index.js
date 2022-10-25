@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { userModule } from './modules/userModule'
+import { companyModule } from './modules/companyModule'
 
 export const store = createStore({
     state() { },
@@ -7,6 +7,6 @@ export const store = createStore({
     actions: {},
     mutations: {},
     modules: {
-        userModule
+        companyModule
     },
 })

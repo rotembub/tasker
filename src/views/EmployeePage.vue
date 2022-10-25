@@ -1,29 +1,29 @@
 <template>
     <section class="employee-page">
         <h1>employees page</h1>
-        <GeneralList @onDeleteUser="onDeleteUser" :users="users" />
+        <TableList @onDeleteUser="onDeleteUser" :tableData="companies" />
     </section>
 </template>
   
 <script>
-import GeneralList from '../components/GeneralList.vue';
+import TableList from '../components/TableList.vue';
 
 export default {
     name: 'user-page',
     components: {
-        GeneralList
+        TableList
     },
     created() {
-        this.$store.dispatch({ type: 'loadUsers' })
+        // this.$store.dispatch({ type: 'loadCompanies' })
     },
     methods: {
         onDeleteUser(userId) {
-            this.$store.dispatch({ type: 'removeUser', userId })
+            this.$store.dispatch({ type: 'removeCompany', userId })
         }
     },
     computed: {
-        users() {
-            return this.$store.getters.users
+        companies() {
+            return this.$store.getters.companies
         }
     }
 

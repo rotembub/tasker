@@ -1,7 +1,7 @@
 <template>
   <header class="app-header">
-    <RouterLink to="/">users</RouterLink>
-    <RouterLink to="/about">about</RouterLink>
+    <h1>header</h1>
+    <input type="text" placeholder="Company search">
   </header>
 </template>
 

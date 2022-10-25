@@ -1,29 +1,38 @@
 <template>
-    <section class="general-list">
-        <div v-for="user in users" key="user.id">
+    <section class="table-list">
+
+        <table>
+
+            <EmployeePreview v-for="employee in tableData" key="employee.id" :employee="employee" />
+
+
+        </table>
+
+
+        <!-- <div v-for="user in tableData" key="user.id">
             <UserPreview :user="user" />
             <div class="control-box">
                 <button @click="onDeleteUser(user.id)">X</button>
             </div>
-        </div>
+        </div> -->
     </section>
 </template>
   
 <script>
-import UserPreview from './UserPreview.vue';
+import EmployeePreview from './EmployeePreview.vue';
 
 export default {
     props: {
-        users: Array
+        tableData: Array
     },
     emits: ['onDeleteUser'],
-    name: 'general-list',
+    name: 'table-list',
     methods: {
         onDeleteUser(userId) {
             this.$emit('onDeleteUser', userId)
         }
     },
-    components: { UserPreview }
+    components: { EmployeePreview }
 }
 </script>
   

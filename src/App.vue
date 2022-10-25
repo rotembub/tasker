@@ -1,7 +1,7 @@
 <template>
   <section class="app-container main-layout">
     <AppHeader />
-    <SideNav/>
+    <SideNav />
     <RouterView />
     <AppFooter />
   </section>
@@ -20,6 +20,9 @@ export default {
     SideNav,
     AppFooter,
   },
+  created() {
+    this.$store.dispatch({ type: 'loadCompanies' })
+  }
 }
 
 </script>
