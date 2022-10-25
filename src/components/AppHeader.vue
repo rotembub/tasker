@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="app-header">
     <RouterLink to="/">users</RouterLink>
     <RouterLink to="/about">about</RouterLink>
   </header>

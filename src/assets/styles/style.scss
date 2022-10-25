@@ -8,5 +8,10 @@
 @import 'base/layout';
 
 // VIEWS
+@import 'pages/department-page';
+@import 'pages/employee-page';
 
 // COMPONENTS
+@import 'components/app-footer';
+@import 'components/app-header';
+@import 'components/side-nav';

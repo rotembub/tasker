@@ -1,17 +1,17 @@
 <template>
-    <section class="user-page">
-        <h1>users page</h1>
-        <UsersList @onDeleteUser="onDeleteUser" :users="users" />
+    <section class="employee-page">
+        <h1>employees page</h1>
+        <GeneralList @onDeleteUser="onDeleteUser" :users="users" />
     </section>
 </template>
   
 <script>
-import UsersList from '../components/UsersList.vue';
+import GeneralList from '../components/GeneralList.vue';
 
 export default {
     name: 'user-page',
     components: {
-        UsersList
+        GeneralList
     },
     created() {
         this.$store.dispatch({ type: 'loadUsers' })

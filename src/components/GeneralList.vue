@@ -1,5 +1,5 @@
 <template>
-    <section class="users-list">
+    <section class="general-list">
         <div v-for="user in users" key="user.id">
             <UserPreview :user="user" />
             <div class="control-box">
@@ -17,7 +17,7 @@ export default {
         users: Array
     },
     emits: ['onDeleteUser'],
-    name: 'user-list',
+    name: 'general-list',
     methods: {
         onDeleteUser(userId) {
             this.$emit('onDeleteUser', userId)

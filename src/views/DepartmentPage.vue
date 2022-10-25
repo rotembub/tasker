@@ -1,13 +1,13 @@
 <template>
-    <section class="about-page">
-        about-page
+    <section class="department-page">
+        department-page
     </section>
 </template>
   
 <script>
 
 export default {
-    name: 'about-page',
+    name: 'department-page',
     components: {
     },
 }
