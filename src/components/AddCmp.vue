@@ -5,6 +5,11 @@
         <template v-if="entityType === 'Employee'">
             <input type="text" :name="`${entityType}-title`" :placeholder="`${entityType} title`"
                 v-model="entity.title">
+            <select name="department-names" @input="handleInput" placeholder="Department">
+                <option value="" disabled selected>Department</option>
+                <option v-for="dep in departments" :key="dep.id" :value="dep.id">{{ dep.name }}
+                </option>
+            </select>
         </template>
         <button @click="onAddEntity">Add</button>
     </section>
@@ -36,6 +41,16 @@ export default {
         getEmptyEntity() {
             if (this.entityType === 'Department') this.entity = companyService.getEmptyDepartment()
             else this.entity = companyService.getEmptyEmployee()
+        },
+        handleInput(ev) {
+            const departmentId = ev.target.value
+            this.entity.departmentId = departmentId
+            this.entity.department = this.departments.find(dep => dep.id === departmentId).name
+        }
+    },
+    computed: {
+        departments() {
+            return this.$store.getters.departments
         }
     }
 }

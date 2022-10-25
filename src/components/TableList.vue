@@ -7,7 +7,8 @@
                     <DepartmentPreview v-for="department in tableData" :key="department.id" :department="department"
                         @deleteDepartment="onDeleteDepartment" />
                 </template>
-                <EmployeePreview v-else v-for="employee in tableData" :key="employee.id" :employee="employee" />
+                <EmployeePreview v-else v-for="employee in tableData" :key="employee.id" :employee="employee"
+                    @deleteEmployee="onDeleteEmployee" />
             </tbody>
         </table>
     </section>
@@ -22,11 +23,14 @@ export default {
     props: {
         tableData: Array
     },
-    emits: ['deleteDepartment'],
+    emits: ['deleteDepartment','deleteEmployee'],
     name: 'table-list',
     methods: {
         onDeleteDepartment(departId) {
             this.$emit('deleteDepartment', departId)
+        },
+        onDeleteEmployee(data) {
+            this.$emit('deleteEmployee', data)
         }
     },
     computed: {

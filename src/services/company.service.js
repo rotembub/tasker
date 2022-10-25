@@ -9,7 +9,9 @@ export const companyService = {
   addDepartment,
   updateCompany,
   removeDepartment,
-  getEmptyEmployee
+  getEmptyEmployee,
+  addEmployee,
+  removeEmployee
 }
 const COMPANY_KEY = 'companiesDB'
 // data structure:
@@ -134,31 +136,29 @@ async function addDepartment(companyId, department) {
 }
 
 async function removeDepartment(companyId, departmentId, reassignTo) {
-  console.log(companyId, departmentId, reassignTo)
-  let companyToUpdate = await getCompanyById(companyId)
-  console.log(companyToUpdate)
-  const departmentToRemove = companyToUpdate.departments.find(dep => dep.id === departmentId)
-  const depIdx = companyToUpdate.departments.findIndex(dep => dep.id === departmentId)
-  if (reassignTo) {
-    var employeesToReassign = companyToUpdate.departments[depIdx].employees
-    companyToUpdate = _reassignEmployees(companyToUpdate, reassignTo, employeesToReassign)
-  } else {
-    companyToUpdate.employees = companyToUpdate.employees.filter(emp => !departmentToRemove.employees.includes(emp.id))
+  try {
+    let companyToUpdate = await getCompanyById(companyId)
+    const departmentToRemove = companyToUpdate.departments.find(dep => dep.id === departmentId)
+    const depIdx = companyToUpdate.departments.findIndex(dep => dep.id === departmentId)
+    if (reassignTo) {
+      var employeesToReassign = companyToUpdate.departments[depIdx].employees
+      companyToUpdate = _reassignEmployees(companyToUpdate, reassignTo, employeesToReassign)
+    } else {
+      companyToUpdate.employees = companyToUpdate.employees.filter(emp => !departmentToRemove.employees.includes(emp.id))
+    }
+    companyToUpdate.departments.splice(depIdx, 1)
+    return updateCompany(companyToUpdate)
+  } catch (err) {
+    console.error('Could not remove department', err)
   }
-  companyToUpdate.departments.splice(depIdx, 1)
-  return updateCompany(companyToUpdate)
 }
 
 function _reassignEmployees(company, departmentId, employeesToReassign) {
   const companyToUpdate = JSON.parse(JSON.stringify(company))
-  console.log(company, companyToUpdate, employeesToReassign)
   const depIdx = companyToUpdate.departments.findIndex(dep => dep.id === departmentId)
   companyToUpdate.departments[depIdx].employees.push(...employeesToReassign)
   companyToUpdate.employees = companyToUpdate.employees.map(emp => {
-    console.log(emp)
-    console.log(employeesToReassign)
     if (employeesToReassign.includes(emp.id)) {
-      console.log('includes!');
       // if you find an employee who is in the reassigned array
       // then update his dep ID and dep Name
       emp.departmentId = departmentId
@@ -167,6 +167,31 @@ function _reassignEmployees(company, departmentId, employeesToReassign) {
     return emp
   })
   return companyToUpdate
+}
+
+async function addEmployee(companyId, employee) {
+  try {
+    const company = await getCompanyById(companyId)
+    company.employees.push(employee)
+    const depIdx = company.departments.findIndex(dep => dep.id === employee.departmentId)
+    company.departments[depIdx].employees.push(employee.id)
+    return updateCompany(company)
+  } catch (err) {
+    console.error('Could not add employee:', err)
+  }
+}
+
+async function removeEmployee(companyId, departmentId, employeeId) {
+  try {
+    const company = await getCompanyById(companyId)
+    const idx = company.employees.findIndex(emp => emp.id === employeeId)
+    const depIdx = company.departments.findIndex(dep => dep.id === departmentId)
+    company.employees.splice(idx, 1)
+    company.departments[depIdx] = company.departments[depIdx].employees.filter(empId => empId !== employeeId)
+    return updateCompany(company)
+  } catch (err) {
+    console.error('Could not delete employee:', err)
+  }
 }
 
 function getEmptyEmployee() {

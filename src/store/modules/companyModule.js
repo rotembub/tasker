@@ -1,3 +1,4 @@
+import { compileScript } from 'vue/compiler-sfc'
 import { companyService } from '../../services/company.service'
 
 export const companyModule = {
@@ -89,6 +90,16 @@ export const companyModule = {
             commit({ type: 'setSelectedCompany', company: updatedCompany })
             commit({ type: 'updateCompany', updatedCompany })
             commit({ type: 'setDepartmentToDelete', department: null })
+        },
+        async addEmployee({ commit, state }, { employee }) {
+            const updatedCompany = await companyService.addEmployee(state.selectedCompany._id, employee)
+            commit({ type: 'setSelectedCompany', company: updatedCompany })
+            commit({ type: 'updateCompany', updatedCompany })
+        },
+        async removeEmployee({ commit, state }, { employeeId, departmentId }) {
+            const updatedCompany = await companyService.removeEmployee(state.selectedCompany._id, departmentId, employeeId)
+            commit({ type: 'setSelectedCompany', company: updatedCompany })
+            commit({ type: 'updateCompany', updatedCompany })
         }
     },
 }

@@ -1,7 +1,7 @@
 <template>
     <section v-if="selectedCompany" class="employee-page">
         <AddCmp @addEntity="onAddEmployee" :entityType="'Employee'" />
-        <TableList :tableData="employees" />
+        <TableList :tableData="employees" @deleteEmployee="onDeleteEmployee" />
     </section>
 </template>
   
@@ -21,6 +21,10 @@ export default {
     methods: {
         onAddEmployee(employee) {
             console.log(employee)
+            this.$store.dispatch({ type: 'addEmployee', employee })
+        },
+        onDeleteEmployee({ employeeId, departmentId }) {
+            this.$store.dispatch({ type: 'removeEmployee', employeeId, departmentId })
         }
 
     },
